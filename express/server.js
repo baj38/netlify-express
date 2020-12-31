@@ -166,7 +166,7 @@ function run(reqbody) {
 
     if (route == 'sendpick')
     {
-      const pick = new conn.model('Pick')({
+      const pick = conn.model('Pick')({
         teamid: reqbody.teamid,
         leagueid: reqbody.leagueid,
         player: reqbody.player,
