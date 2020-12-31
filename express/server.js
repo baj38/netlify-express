@@ -142,7 +142,7 @@ function run(reqbody) {
       const M = conn.model('Player');
       yield M.findOne({username: reqbody.username}, function (_err, founduser) {
         if (founduser === null) {
-          const new_user = new conn.model('Player')({
+          const new_user = conn.model('Player')({
             username: reqbody.username,
             email: reqbody.email,
             avatar: reqbody.avatar,
@@ -174,12 +174,63 @@ function run(reqbody) {
         sport: reqbody.sport,
         teamname: reqbody.teamname,
       });
-
       pick
         .save()
         .then((data) => {
           doc = data;
         })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (route == 'createleague')
+    {
+      const league = conn.model('League')({
+        name: reqbody.name,
+        size: reqbody.size,
+        players: reqbody.players,
+        sports: reqbody.sports,
+        season: reqbody.season,
+      });
+      league
+        .save()
+        .then((data) => {
+          doc = data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (route == 'updateleague')
+    {
+      const M = conn.model('League');
+
+      doc = yield M.findByIdAndUpdate(reqbody.id, {
+        name: reqbody.name,
+        size: reqbody.size,
+        season: reqbody.season,
+        sports: reqbody.sports,
+        players: reqbody.players,
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (route == 'updateplayer')
+    {
+      const M = conn.model('Player');
+
+      doc = yield M.findByIdAndUpdate(reqbody.id, {
+        username: reqbody.username,
+        password: reqbody.password,
+        email: reqbody.email,
+        sms: reqbody.sms,
+        avatar: reqbody.avatar,
+        leagues: reqbody.leagues,
+      })
         .catch((err) => {
           console.log(err);
         });
