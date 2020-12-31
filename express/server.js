@@ -50,9 +50,45 @@ function run() {
         sport: String,
         points: Number,
       }));
+      
+      conn.model('League', new mongoose.Schema({
+        name: String,
+        size: Number,
+        season: Number,
+        sports: {type: Array, default: []},
+        players: {type: Array, default: []},
+      }));
+
+      conn.model('Pick', new mongoose.Schema({
+        teamid: String,
+        teamname: String,
+        leagueid: String,
+        player: String,
+        picknumber: Number,
+        sport: String,
+      }));
+
+      const PlayerSchema = new mongoose.Schema({
+        username: String,
+        password: String,
+        email: String,
+        avatar: String,
+        leagues: {type: Array, default: []},
+      });
+      
+      PlayerSchema.methods.generateHash = function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+      };
+      
+      PlayerSchema.methods.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.password);
+      };
+      
+      conn.model('Player', PlayerSchema);
+
     }
 
-    const M = conn.model('Team');
+    const M = conn.model('League');
 
     const doc = yield M.find();
     const response = {
