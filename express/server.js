@@ -8,6 +8,8 @@ var co = require('co');
 
 const mongoose = require('mongoose');
 
+let conn = null;
+
 /*
 require('./Team');
 require('./League');
