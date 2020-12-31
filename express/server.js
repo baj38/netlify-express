@@ -30,7 +30,7 @@ mongoose.connect(mongoUri, {
 exports.handler = function(event, context, callback) {
   console.log('Calling MongoDB Atlas from AWS Lambda with event: ' + JSON.stringify(event));
 
-  var jsonContents = JSON.parse(JSON.stringify(event)).body;
+  var jsonContents = JSON.parse(JSON.stringify(event)).body.leagueid;
 
   console.log('trying to parse json: ' + jsonContents);
 
