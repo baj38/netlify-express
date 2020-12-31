@@ -136,7 +136,11 @@ function run(reqbody) {
     {
       const M = conn.model('Player');
       yield M.findOne({username: reqbody.username}, (_err, player) => {
-        doc = player.validPassword(reqbody.password);
+        console.log('found player: ' + player);
+        if (player != null)
+        {
+          doc = player.validPassword(reqbody.password);
+        }
       });
     }
 
