@@ -28,21 +28,17 @@ mongoose.connect(mongoUri, {
 });
 */
 exports.handler = function(event, context, callback) {
-  console.log('JSON.stringify(event): ' + JSON.stringify(event));
-  console.log('JSON.parse(JSON.stringify(event)).body: ' + JSON.parse(JSON.stringify(event)).body);
-  console.log('JSON.parse(JSON.stringify(event)).body.leagueid: ' + JSON.parse(JSON.stringify(event)).body.leagueid);
-  console.log('JSON.parse(JSON.parse(JSON.stringify(event)).body).leagueid: ' + JSON.parse(JSON.parse(JSON.stringify(event)).body).leagueid);
-
+  var requestbody = JSON.parse(JSON.parse(JSON.stringify(event)).body);
   context.callbackWaitsForEmptyEventLoop = false;
 
-  run().
+  run(requestbody).
     then(res => {
       callback(null,res);
     }).
       catch(error => callback(error))
 };
 
-function run() {
+function run(reqbody) {
   return co(function*() {
     if (conn == null) {
       conn = yield mongoose.createConnection(mongoUri, {
@@ -95,7 +91,15 @@ function run() {
 
     const M = conn.model('Pick');
 
-    const doc = yield M.find();
+    console.log('finding picks for leagueid: '+ reqbody.leagueid);
+    const doc = yield M.find({leagueid: reqbody.leagueid})
+      .sort({picknumber: 1})
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        console.log(err);
+    });
     const response = {
       statusCode: 200,
       body: JSON.stringify(doc)
