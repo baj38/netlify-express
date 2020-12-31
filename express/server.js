@@ -94,9 +94,6 @@ function run(reqbody) {
     console.log('finding picks for leagueid: '+ reqbody.leagueid);
     const doc = yield M.find({leagueid: reqbody.leagueid})
       .sort({picknumber: 1})
-      .then((data) => {
-        res.send(data);
-      })
       .catch((err) => {
         console.log(err);
     });
