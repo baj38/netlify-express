@@ -29,9 +29,9 @@ mongoose.connect(mongoUri, {
 */
 exports.handler = function(event, context, callback) {
   console.log('JSON.stringify(event): ' + JSON.stringify(event));
-  console.log('JSON.parse(JSON.stringify(event)): ' + JSON.parse(JSON.stringify(event)));
-  console.log('JSON.stringify(event).body: ' + JSON.stringify(event).body);
   console.log('JSON.parse(JSON.stringify(event)).body: ' + JSON.parse(JSON.stringify(event)).body);
+  console.log('JSON.parse(JSON.stringify(event)).body.leagueid: ' + JSON.parse(JSON.stringify(event)).body.leagueid);
+  console.log('JSON.parse(JSON.parse(JSON.stringify(event)).body).leagueid: ' + JSON.parse(JSON.parse(JSON.stringify(event)).body).leagueid);
 
   context.callbackWaitsForEmptyEventLoop = false;
 
