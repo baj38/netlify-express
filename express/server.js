@@ -132,8 +132,8 @@ function run(reqbody) {
     if (route == 'login')
     {
       const M = conn.model('Player');
-      M.findOne({username: reqbody.username}, (_err, player) => {
-        doc = yield player.validPassword(reqbody.password);
+      yield M.findOne({username: reqbody.username}, (_err, player) => {
+        doc = player.validPassword(reqbody.password);
       });
     }
 
