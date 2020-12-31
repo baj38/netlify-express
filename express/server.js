@@ -91,12 +91,17 @@ function run(reqbody) {
 
     const M = conn.model('Pick');
 
-    console.log('finding picks for leagueid: '+ reqbody.leagueid);
-    const doc = yield M.find({leagueid: reqbody.leagueid})
-      .sort({picknumber: 1})
-      .catch((err) => {
-        console.log(err);
-    });
+    var route = reqbody.route;
+    var doc = '';
+    if (route == 'picks')
+    {
+      console.log('finding picks for leagueid: '+ reqbody.leagueid);
+      doc = yield M.find({leagueid: reqbody.leagueid})
+        .sort({picknumber: 1})
+        .catch((err) => {
+          console.log(err);
+      });
+    }
     const response = {
       statusCode: 200,
       body: JSON.stringify(doc)
