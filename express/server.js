@@ -28,11 +28,10 @@ mongoose.connect(mongoUri, {
 });
 */
 exports.handler = function(event, context, callback) {
-  console.log('Calling MongoDB Atlas from AWS Lambda with event: ' + JSON.stringify(event));
-
-  var jsonContents = JSON.parse(JSON.stringify(event)).body.leagueid;
-
-  console.log('trying to parse json: ' + jsonContents);
+  console.log('JSON.stringify(event): ' + JSON.stringify(event));
+  console.log('JSON.parse(JSON.stringify(event)): ' + JSON.parse(JSON.stringify(event)));
+  console.log('JSON.stringify(event).body: ' + JSON.stringify(event).body);
+  console.log('JSON.parse(JSON.stringify(event)).body: ' + JSON.parse(JSON.stringify(event)).body);
 
   context.callbackWaitsForEmptyEventLoop = false;
 
