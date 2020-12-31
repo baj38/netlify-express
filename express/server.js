@@ -16,7 +16,7 @@ const mongoUri =
   'mongodb+srv://b3llamy:10onmySHH@realmcluster.f68jh.mongodb.net/UFLDraft?retryWrites=true&w=majority';
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: false,
 });
 mongoose.connection.on('connected', () => {
   console.log('connected to mongo');
