@@ -1,10 +1,13 @@
 'use strict';
 const express = require('express');
+/*
 const path = require('path');
 const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
+*/
 var co = require('co');
+var bcrypt = require('bcrypt-nodejs');
 
 const mongoose = require('mongoose');
 
