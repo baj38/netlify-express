@@ -7,19 +7,24 @@ const bodyParser = require('body-parser');
 var co = require('co');
 
 const mongoose = require('mongoose');
+
+/*
 require('./Team');
 require('./League');
 require('./Pick');
 require('./Player');
 require('./LeagueMember');
+*/
 
 const mongoUri =
   'mongodb+srv://b3llamy:10onmySHH@realmcluster.f68jh.mongodb.net/UFLDraft?retryWrites=true&w=majority';
+
+/*
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: false,
 });
-
+*/
 exports.handler = function(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false;
 
