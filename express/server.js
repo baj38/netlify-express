@@ -150,7 +150,7 @@ function run(reqbody) {
             leagues: reqbody.leagues,
           });
           new_user.password = new_user.generateHash(reqbody.password);
-          yield new_user
+          new_user
             .save()
             .then((data) => {
               doc = data;
@@ -175,7 +175,7 @@ function run(reqbody) {
         teamname: reqbody.teamname,
       });
 
-      yield pick
+      pick
         .save()
         .then((data) => {
           doc = data;
