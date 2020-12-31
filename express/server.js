@@ -94,7 +94,6 @@ function run(reqbody) {
     if (route == 'picks')
     {
       const M = conn.model('Pick');
-      console.log('finding picks for leagueid: '+ reqbody.leagueid);
       doc = yield M.find({leagueid: reqbody.leagueid})
         .sort({picknumber: 1})
         .catch((err) => {
@@ -104,7 +103,6 @@ function run(reqbody) {
 
     if (route == 'leagues')
     {
-      console.log('finding leagues');
       const M = conn.model('League');
       doc = yield M.find({})
         .catch((err) => {
@@ -114,7 +112,6 @@ function run(reqbody) {
 
     if (route == 'players')
     {
-      console.log('finding players');
       const M = conn.model('Player');
       doc = yield M.find({})
         .catch((err) => {
@@ -124,12 +121,19 @@ function run(reqbody) {
 
     if (route == 'teams')
     {
-      console.log('finding teams');
       const M = conn.model('Team');
       doc = yield M.find({})
         .sort({projected: -1})
         .catch((err) => {
           console.log(err);
+      });
+    }
+
+    if (route == 'login')
+    {
+      const M = conn.model('Player');
+      M.findOne({username: reqbody.username}, (_err, player) => {
+        doc = yield player.validPassword(reqbody.password);
       });
     }
 
