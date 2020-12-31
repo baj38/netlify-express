@@ -32,9 +32,7 @@ exports.handler = function(event, context, callback) {
 
   var jsonContents = JSON.parse(JSON.stringify(event));
 
-  if (jsonContents.leagueid != null) {
-    console.log('calling server with leagueid: ' + jsonContents.leagueid);
-  }
+  console.log('trying to parse json: ' + jsonContents);
 
   context.callbackWaitsForEmptyEventLoop = false;
 
