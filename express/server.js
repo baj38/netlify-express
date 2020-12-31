@@ -28,6 +28,7 @@ mongoose.connect(mongoUri, {
 });
 */
 exports.handler = function(event, context, callback) {
+  console.log(event);
   context.callbackWaitsForEmptyEventLoop = false;
 
   run().
@@ -88,7 +89,7 @@ function run() {
 
     }
 
-    const M = conn.model('League');
+    const M = conn.model('Pick');
 
     const doc = yield M.find();
     const response = {
