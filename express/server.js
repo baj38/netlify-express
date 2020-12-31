@@ -4,6 +4,7 @@ const path = require('path');
 const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
+var co = require('co');
 
 const mongoose = require('mongoose');
 require('./Team');
@@ -18,6 +19,44 @@ mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: false,
 });
+
+exports.handler = function(event, context, callback) {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  run().
+    then(res => {
+      callback(null,res);
+    }).
+      catch(error => callback(error))
+};
+
+function run() {
+  return co(function*() {
+    if (conn == null) {
+      conn = yield mongoose.createConnection(mongoUri, {
+        bufferCommands: false,
+        bufferMaxEntries: 0
+      });
+      conn.model('Team', new mongoose.Schema({
+        name: String,
+        projected: Number,
+        sport: String,
+        points: Number,
+      }));
+    }
+
+    const M = conn.model('Team');
+
+    const doc = yield M.find();
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify(doc)
+    };
+    return response;
+  });
+}
+
+/*
 mongoose.connection.on('connected', () => {
   console.log('connected to mongo');
 });
@@ -235,3 +274,4 @@ app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 module.exports = app;
 module.exports.handler = serverless(app);
+*/
