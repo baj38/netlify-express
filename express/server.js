@@ -180,6 +180,7 @@ function run(reqbody) {
         picknumber: reqbody.picknumber,
         sport: reqbody.sport,
         teamname: reqbody.teamname,
+        pickstring: reqbody.pickstring,
       });
       pick
         .save()
