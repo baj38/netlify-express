@@ -70,6 +70,7 @@ function run(reqbody) {
         player: String,
         picknumber: Number,
         sport: String,
+        pickstring: String,
       }));
 
       const PlayerSchema = new mongoose.Schema({
